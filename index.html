@@ -16,13 +16,15 @@
             height: 100vh;
             font-family: 'Dancing Script', cursive; /* Set the romantic font */
             position: relative;
+            text-align: center; /* Center the text */
         }
         .message {
-            font-size: 3rem;
+            font-size: 5vw; /* Adjust the font size based on viewport width */
             font-weight: bold;
             color: #ff0066;
             white-space: nowrap;
             position: relative; /* Keeps it stable */
+            display: inline-block;
         }
         .heart {
             position: absolute;
@@ -54,6 +56,23 @@
         @keyframes showLetter {
             0% { opacity: 0; }
             100% { opacity: 1; }
+        }
+
+        /* Media query for small screens */
+        @media (max-width: 600px) {
+            .message {
+                font-size: 8vw; /* Increase font size on smaller screens */
+            }
+            .heart, .glowing-heart {
+                font-size: 20px; /* Adjust heart size on small screens */
+            }
+        }
+
+        /* Media query for larger screens */
+        @media (min-width: 1024px) {
+            .message {
+                font-size: 3rem; /* Set a fixed font size for larger screens */
+            }
         }
     </style>
 </head>
