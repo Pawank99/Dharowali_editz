@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Love Message</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet"> <!-- Added font link -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -14,60 +14,83 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            font-family: 'Dancing Script', cursive; /* Set the romantic font */
+            font-family: 'Dancing Script', cursive;
             position: relative;
-            text-align: center; /* Center the text */
+            text-align: center;
             padding: 20px;
         }
         .message {
-            font-size: 5vw; /* Adjust the font size based on viewport width */
+            font-size: 5vw;
             font-weight: bold;
             color: #ff0066;
-            white-space: normal; /* Allow text to wrap */
-            position: relative; /* Keeps it stable */
+            white-space: normal;
+            position: relative;
             display: inline-block;
             opacity: 0;
-            animation: showText 1s forwards 2s; /* Adds a 2-second delay */
-            max-width: 100%; /* Ensure the message takes up the full width available */
-            word-wrap: break-word; /* Allow text to wrap at word boundaries */
+            animation: showText 1s forwards 2s;
+            max-width: 100%;
+            word-wrap: break-word;
+            filter: blur(6px);
+            transition: filter 0.3s ease;
         }
+
+        .message.show {
+            filter: none;
+        }
+
         @keyframes showText {
             0% { opacity: 0; }
             100% { opacity: 1; }
         }
+
         .heart {
             position: absolute;
             color: red;
             font-size: 30px;
             animation: float 5s linear infinite;
         }
-        /* Glowing heart animation */
+
         .glowing-heart {
             position: absolute;
             color: red;
             font-size: 40px;
             animation: float 5s linear infinite, glowing 1.5s ease-in-out infinite;
         }
+
         @keyframes float {
             0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
             100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
+
         @keyframes glowing {
-            0% { text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red, 0 0 40px red; }
-            50% { text-shadow: 0 0 20px red, 0 0 30px red, 0 0 40px red, 0 0 50px red; }
-            100% { text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red, 0 0 40px red; }
+            0% { text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red; }
+            50% { text-shadow: 0 0 20px red, 0 0 30px red, 0 0 40px red; }
+            100% { text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red; }
+        }
+
+        /* Watermark */
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 14px;
+            color: rgba(255, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
-    <div class="message">
+
+    <div class="message" id="secretMsg">
         Hey Priyanka,<br>
         I hope you’re doing well. I’ve been meaning to share something with you, and I thought it was important to be honest. Over time, I’ve come to really admire you. Every time I see you or get a chance to talk, it just makes my day brighter. I know that feelings aren’t always mutual, and I respect whatever you might feel. I just wanted to let you know from the bottom of my heart that I like you.<br><br>
         I understand if you don’t feel the same way, and I promise there are no hard feelings at all. I just felt it was important to express this to you in the most genuine way possible. Take care, and I hope we can continue being good friends regardless.
     </div>
 
-    <div class="heart">❤️</div> <!-- Original heart -->
-    <div class="glowing-heart">❤️</div> <!-- New glowing heart -->
+    <div class="heart">❤️</div>
+    <div class="glowing-heart">❤️</div>
+    <div class="watermark">📵 No Screenshots Please</div>
 
     <script>
         function createHeart() {
@@ -86,6 +109,38 @@
             }, 5000);
         }
         setInterval(createHeart, 300);
+
+        // Screenshot deterrent: blur message until touched
+        const msg = document.getElementById("secretMsg");
+        msg.addEventListener("touchstart", () => msg.classList.add("show"));
+        msg.addEventListener("touchend", () => msg.classList.remove("show"));
+        msg.addEventListener("mousedown", () => msg.classList.add("show"));
+        msg.addEventListener("mouseup", () => msg.classList.remove("show"));
+
+        // Disable right click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // Disable print screen (attempt)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "PrintScreen") {
+                alert("Screenshots are not allowed on this page.");
+                e.preventDefault();
+            }
+            if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'S' || e.key === 'U')) {
+                e.preventDefault();
+            }
+        });
+
+        // Detect DevTools (only works in some browsers)
+        let devtoolsOpen = false;
+        const element = new Image();
+        Object.defineProperty(element, 'id', {
+            get: function () {
+                devtoolsOpen = true;
+                document.body.innerHTML = "<h1 style='color:red;text-align:center;'>Screenshot Not Allowed</h1>";
+            }
+        });
+        console.log(element);
     </script>
 </body>
 </html>
