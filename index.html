@@ -1,146 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Love Message</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #ffebf3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            font-family: 'Dancing Script', cursive;
-            position: relative;
-            text-align: center;
-            padding: 20px;
-        }
-        .message {
-            font-size: 5vw;
-            font-weight: bold;
-            color: #ff0066;
-            white-space: normal;
-            position: relative;
-            display: inline-block;
-            opacity: 0;
-            animation: showText 1s forwards 2s;
-            max-width: 100%;
-            word-wrap: break-word;
-            filter: blur(6px);
-            transition: filter 0.3s ease;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Love Message</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #ffebf3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: 'Dancing Script', cursive;
+      position: relative;
+      text-align: center;
+      padding: 20px;
+      user-select: none; /* Prevent text selection */
+    }
 
-        .message.show {
-            filter: none;
-        }
+    .message {
+      font-size: 5vw;
+      font-weight: bold;
+      color: #ff0066;
+      white-space: normal;
+      position: relative;
+      display: inline-block;
+      opacity: 0;
+      animation: showText 1s forwards 2s;
+      max-width: 100%;
+      word-wrap: break-word;
+      filter: blur(6px);
+      transition: filter 0.3s ease;
+      pointer-events: none; /* Prevent copying */
+    }
 
-        @keyframes showText {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
+    .message.show {
+      filter: none;
+      pointer-events: auto;
+    }
 
-        .heart {
-            position: absolute;
-            color: red;
-            font-size: 30px;
-            animation: float 5s linear infinite;
-        }
+    @keyframes showText {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
 
-        .glowing-heart {
-            position: absolute;
-            color: red;
-            font-size: 40px;
-            animation: float 5s linear infinite, glowing 1.5s ease-in-out infinite;
-        }
+    .heart {
+      position: absolute;
+      color: red;
+      font-size: 30px;
+      animation: float 5s linear infinite;
+    }
 
-        @keyframes float {
-            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-        }
+    .glowing-heart {
+      position: absolute;
+      color: red;
+      font-size: 40px;
+      animation: float 5s linear infinite, glowing 1.5s ease-in-out infinite;
+    }
 
-        @keyframes glowing {
-            0% { text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red; }
-            50% { text-shadow: 0 0 20px red, 0 0 30px red, 0 0 40px red; }
-            100% { text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red; }
-        }
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
 
-        /* Watermark */
-        .watermark {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            font-size: 14px;
-            color: rgba(255, 0, 0, 0.3);
-            z-index: 9999;
-            pointer-events: none;
-        }
-    </style>
+    @keyframes glowing {
+      0% { text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red; }
+      50% { text-shadow: 0 0 20px red, 0 0 30px red, 0 0 40px red; }
+      100% { text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red; }
+    }
+  </style>
 </head>
-<body>
+<body oncontextmenu="return false">
 
-    <div class="message" id="secretMsg">
-        Hey Priyanka,<br>
-        I hope you’re doing well. I’ve been meaning to share something with you, and I thought it was important to be honest. Over time, I’ve come to really admire you. Every time I see you or get a chance to talk, it just makes my day brighter. I know that feelings aren’t always mutual, and I respect whatever you might feel. I just wanted to let you know from the bottom of my heart that I like you.<br><br>
-        I understand if you don’t feel the same way, and I promise there are no hard feelings at all. I just felt it was important to express this to you in the most genuine way possible. Take care, and I hope we can continue being good friends regardless.
-    </div>
+  <div class="message" id="secretMsg">
+    Hey Priyanka,<br>
+    I hope you’re doing well. I’ve been meaning to share something with you, and I thought it was important to be honest. Over time, I’ve come to really admire you. Every time I see you or get a chance to talk, it just makes my day brighter. I know that feelings aren’t always mutual, and I respect whatever you might feel. I just wanted to let you know from the bottom of my heart that I like you.<br><br>
+    I understand if you don’t feel the same way, and I promise there are no hard feelings at all. I just felt it was important to express this to you in the most genuine way possible. Take care, and I hope we can continue being good friends regardless.
+  </div>
 
-    <div class="heart">❤️</div>
-    <div class="glowing-heart">❤️</div>
-    <div class="watermark">📵 No Screenshots Please</div>
+  <div class="heart">❤️</div>
+  <div class="glowing-heart">❤️</div>
 
-    <script>
-        function createHeart() {
-            const heart = document.createElement("div");
-            heart.classList.add("heart");
-            heart.innerHTML = "❤️";
-            document.body.appendChild(heart);
-            
-            const size = Math.random() * 30 + 20;
-            heart.style.fontSize = `${size}px`;
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
-            
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
-        }
-        setInterval(createHeart, 300);
+  <script>
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤️";
+      document.body.appendChild(heart);
 
-        // Screenshot deterrent: blur message until touched
-        const msg = document.getElementById("secretMsg");
-        msg.addEventListener("touchstart", () => msg.classList.add("show"));
-        msg.addEventListener("touchend", () => msg.classList.remove("show"));
-        msg.addEventListener("mousedown", () => msg.classList.add("show"));
-        msg.addEventListener("mouseup", () => msg.classList.remove("show"));
+      const size = Math.random() * 30 + 20;
+      heart.style.fontSize = `${size}px`;
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = Math.random() * 3 + 2 + "s";
 
-        // Disable right click
-        document.addEventListener('contextmenu', e => e.preventDefault());
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+    setInterval(createHeart, 300);
 
-        // Disable print screen (attempt)
-        document.addEventListener('keydown', function(e) {
-            if (e.key === "PrintScreen") {
-                alert("Screenshots are not allowed on this page.");
-                e.preventDefault();
-            }
-            if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'S' || e.key === 'U')) {
-                e.preventDefault();
-            }
-        });
+    // Blur-until-touched behavior
+    const msg = document.getElementById("secretMsg");
+    msg.addEventListener("touchstart", () => msg.classList.add("show"));
+    msg.addEventListener("touchend", () => msg.classList.remove("show"));
+    msg.addEventListener("mousedown", () => msg.classList.add("show"));
+    msg.addEventListener("mouseup", () => msg.classList.remove("show"));
 
-        // Detect DevTools (only works in some browsers)
-        let devtoolsOpen = false;
-        const element = new Image();
-        Object.defineProperty(element, 'id', {
-            get: function () {
-                devtoolsOpen = true;
-                document.body.innerHTML = "<h1 style='color:red;text-align:center;'>Screenshot Not Allowed</h1>";
-            }
-        });
-        console.log(element);
-    </script>
+    // Block keyboard shortcuts (Ctrl+U, Ctrl+S, PrintScreen)
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "PrintScreen") {
+        alert("Screenshots are not allowed on this page.");
+        e.preventDefault();
+      }
+      if (e.ctrlKey && (e.key.toLowerCase() === 'u' || e.key.toLowerCase() === 's')) {
+        e.preventDefault();
+      }
+    });
+
+    // Attempt DevTools detection
+    let devtoolsOpen = false;
+    const element = new Image();
+    Object.defineProperty(element, 'id', {
+      get: function () {
+        devtoolsOpen = true;
+        document.body.innerHTML = "<h1 style='color:red;text-align:center;'>Screenshot Not Allowed</h1>";
+      }
+    });
+    console.log(element);
+  </script>
 </body>
 </html>
