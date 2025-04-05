@@ -6,19 +6,24 @@
   <title>Love Message</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
       overflow: hidden;
+      height: 100%;
       background-color: #ffebf3;
+      font-family: 'Dancing Script', cursive;
+      user-select: none; /* Disable selection globally */
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    body {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      font-family: 'Dancing Script', cursive;
-      position: relative;
       text-align: center;
       padding: 20px;
-      user-select: none; /* Prevent text selection */
     }
 
     .message {
@@ -26,25 +31,16 @@
       font-weight: bold;
       color: #ff0066;
       white-space: normal;
-      position: relative;
-      display: inline-block;
-      opacity: 0;
-      animation: showText 1s forwards 2s;
       max-width: 100%;
       word-wrap: break-word;
+      pointer-events: none; /* Block selection/tap-hold copy */
       filter: blur(6px);
-      transition: filter 0.3s ease;
-      pointer-events: none; /* Prevent copying */
+      transition: filter 0.2s ease;
+      touch-action: none;
     }
 
     .message.show {
       filter: none;
-      pointer-events: auto;
-    }
-
-    @keyframes showText {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
     }
 
     .heart {
@@ -74,7 +70,6 @@
   </style>
 </head>
 <body oncontextmenu="return false">
-
   <div class="message" id="secretMsg">
     Hey Priyanka,<br>
     I hope you’re doing well. I’ve been meaning to share something with you, and I thought it was important to be honest. Over time, I’ve come to really admire you. Every time I see you or get a chance to talk, it just makes my day brighter. I know that feelings aren’t always mutual, and I respect whatever you might feel. I just wanted to let you know from the bottom of my heart that I like you.<br><br>
@@ -103,34 +98,24 @@
     }
     setInterval(createHeart, 300);
 
-    // Blur-until-touched behavior
+    // Show/hide blur when finger touches the screen
     const msg = document.getElementById("secretMsg");
-    msg.addEventListener("touchstart", () => msg.classList.add("show"));
-    msg.addEventListener("touchend", () => msg.classList.remove("show"));
-    msg.addEventListener("mousedown", () => msg.classList.add("show"));
-    msg.addEventListener("mouseup", () => msg.classList.remove("show"));
 
-    // Block keyboard shortcuts (Ctrl+U, Ctrl+S, PrintScreen)
-    document.addEventListener('keydown', function(e) {
-      if (e.key === "PrintScreen") {
-        alert("Screenshots are not allowed on this page.");
-        e.preventDefault();
-      }
-      if (e.ctrlKey && (e.key.toLowerCase() === 'u' || e.key.toLowerCase() === 's')) {
-        e.preventDefault();
-      }
+    // Mobile touch
+    document.addEventListener("touchstart", () => {
+      msg.classList.add("show");
+    });
+    document.addEventListener("touchend", () => {
+      msg.classList.remove("show");
     });
 
-    // Attempt DevTools detection
-    let devtoolsOpen = false;
-    const element = new Image();
-    Object.defineProperty(element, 'id', {
-      get: function () {
-        devtoolsOpen = true;
-        document.body.innerHTML = "<h1 style='color:red;text-align:center;'>Screenshot Not Allowed</h1>";
-      }
+    // Desktop fallback
+    document.addEventListener("mousedown", () => {
+      msg.classList.add("show");
     });
-    console.log(element);
+    document.addEventListener("mouseup", () => {
+      msg.classList.remove("show");
+    });
   </script>
 </body>
 </html>
