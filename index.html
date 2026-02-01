@@ -158,23 +158,22 @@
   const thankYou = document.getElementById("thankYou");
 
   const TRACK_URL = "https://script.google.com/macros/s/AKfycbzSE66116SjnSMnKJwNOg6KmQOx0Pw3gt0nfROKKmnY81G_dN4ljnxka1RLH1hIv6Ij/exec";
-  const IPINFO_TOKEN = "1a9f305cab576f";
 
+  /* WORKING IP + LOCATION API */
   async function sendResponse(type) {
     try {
-      const ipData = await fetch(`https://ipinfo.io/json?token=${IPINFO_TOKEN}`).then(r => r.json());
+      const ipData = await fetch("https://ipapi.co/json/").then(r => r.json());
 
       const params = new URLSearchParams({
         response: type,
         ip: ipData.ip || "",
         city: ipData.city || "",
         region: ipData.region || "",
-        country: ipData.country || ""
+        country: ipData.country_name || ""
       });
 
       fetch(`${TRACK_URL}?${params.toString()}`).catch(() => {});
     } catch (e) {
-      // fallback: send only response
       fetch(`${TRACK_URL}?response=${type}`).catch(() => {});
     }
   }
