@@ -1,121 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Love Message</title>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      height: 100%;
-      background-color: #ffebf3;
-      font-family: 'Dancing Script', cursive;
-      user-select: none; /* Disable selection globally */
-      -webkit-user-select: none;
-      -webkit-touch-callout: none;
-    }
+<meta charset="UTF-8">
+<title>Be My Valentine ❤️</title>
 
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-    }
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: pink;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+  }
 
-    .message {
-      font-size: 5vw;
-      font-weight: bold;
-      color: #ff0066;
-      white-space: normal;
-      max-width: 100%;
-      word-wrap: break-word;
-      pointer-events: none; /* Block selection/tap-hold copy */
-      filter: blur(6px);
-      transition: filter 0.2s ease;
-      touch-action: none;
-    }
+  h1 {
+    text-align: center;
+    margin-top: 80px;
+    color: #d10068;
+  }
 
-    .message.show {
-      filter: none;
-    }
+  #yes, #no {
+    padding: 14px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    position: absolute;
+  }
 
-    .heart {
-      position: absolute;
-      color: red;
-      font-size: 30px;
-      animation: float 5s linear infinite;
-    }
+  #yes {
+    background: #ff4d88;
+    color: white;
+    left: 45%;
+    top: 45%;
+  }
 
-    .glowing-heart {
-      position: absolute;
-      color: red;
-      font-size: 40px;
-      animation: float 5s linear infinite, glowing 1.5s ease-in-out infinite;
-    }
+  #no {
+    background: #444;
+    color: white;
+    left: 55%;
+    top: 45%;
+  }
 
-    @keyframes float {
-      0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
-      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-    }
+  .heart {
+    position: absolute;
+    font-size: 20px;
+    animation: float 6s infinite;
+    opacity: 0.6;
+  }
 
-    @keyframes glowing {
-      0% { text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red; }
-      50% { text-shadow: 0 0 20px red, 0 0 30px red, 0 0 40px red; }
-      100% { text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red; }
-    }
-  </style>
+  @keyframes float {
+    0% { transform: translateY(100vh); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+  }
+</style>
 </head>
-<body oncontextmenu="return false">
-  <div class="message" id="secretMsg">
-    Hey Priyanka,<br>
-    I hope you’re doing well. I’ve been meaning to share something with you, and I thought it was important to be honest. Over time, I’ve come to really admire you. Every time I see you or get a chance to talk, it just makes my day brighter. I know that feelings aren’t always mutual, and I respect whatever you might feel. I just wanted to let you know from the bottom of my heart that I like you.<br><br>
-    I understand if you don’t feel the same way, and I promise there are no hard feelings at all. I just felt it was important to express this to you in the most genuine way possible. Take care, and I hope we can continue being good friends regardless.
-  </div>
 
-  <div class="heart">❤️</div>
-  <div class="glowing-heart">❤️</div>
+<body>
 
-  <script>
-    // Floating hearts
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.innerHTML = "❤️";
-      document.body.appendChild(heart);
+<h1>Will you be my Valentine? ❤️</h1>
 
-      const size = Math.random() * 30 + 20;
-      heart.style.fontSize = `${size}px`;
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+<button id="yes" onclick="alert('Yayyy 💕 Happy Valentine’s Day!')">
+  Yes
+</button>
 
-      setTimeout(() => {
-        heart.remove();
-      }, 5000);
-    }
-    setInterval(createHeart, 300);
+<button id="no">No</button>
 
-    // Show/hide blur when finger touches the screen
-    const msg = document.getElementById("secretMsg");
+<script>
+  const noBtn = document.getElementById("no");
 
-    // Mobile touch
-    document.addEventListener("touchstart", () => {
-      msg.classList.add("show");
-    });
-    document.addEventListener("touchend", () => {
-      msg.classList.remove("show");
-    });
+  function moveNoButton() {
+    const btnWidth = noBtn.offsetWidth;
+    const btnHeight = noBtn.offsetHeight;
 
-    // Desktop fallback
-    document.addEventListener("mousedown", () => {
-      msg.classList.add("show");
-    });
-    document.addEventListener("mouseup", () => {
-      msg.classList.remove("show");
-    });
-  </script>
+    const maxX = window.innerWidth - btnWidth - 20;
+    const maxY = window.innerHeight - btnHeight - 20;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+  }
+
+  noBtn.addEventListener("mouseenter", moveNoButton);
+  noBtn.addEventListener("touchstart", moveNoButton);
+
+  // hearts
+  for (let i = 0; i < 30; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (3 + Math.random() * 5) + "s";
+    heart.style.fontSize = (15 + Math.random() * 25) + "px";
+    document.body.appendChild(heart);
+  }
+</script>
+
 </body>
 </html>
+
