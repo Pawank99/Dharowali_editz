@@ -72,8 +72,8 @@
 
   #loveMessage {
     position: absolute;
-    top: 70%;
-    left: 50%;
+    top: 50%;
+    left: -50%;
     transform: translate(-50%, -50%) scale(0.8);
     font-size: 2.8rem;
     color: white;
@@ -82,7 +82,7 @@
     transition: opacity 2s ease, transform 2s ease;
     font-family: 'Parisienne', cursive;
     z-index: 30;
-    pointer-events: none; /* FIX */
+    pointer-events: none;
   }
 
   #thankYou {
@@ -98,7 +98,7 @@
     font-family: 'Parisienne', cursive;
     z-index: 30;
     animation: sparkle 3s infinite ease-in-out;
-    pointer-events: none; /* FIX */
+    pointer-events: none;
   }
 
   @keyframes sparkle {
@@ -167,20 +167,22 @@
     noBtn.style.top = Math.random() * maxY + "px";
   }
 
-  /* DESKTOP */
+  /* NO BUTTON RUNS AWAY */
   noBtn.addEventListener("mouseenter", moveNoButton);
-
-  /* MOBILE FIX — these two events make it work on all phones */
   noBtn.addEventListener("touchstart", moveNoButton);
   noBtn.addEventListener("touchmove", moveNoButton);
 
-  yesBtn.addEventListener("click", () => {
+  /* YES BUTTON CELEBRATES (works on mobile + desktop) */
+  yesBtn.addEventListener("click", celebrate);
+  yesBtn.addEventListener("touchend", celebrate);
+
+  function celebrate() {
     playMusic();
     createConfetti();
     showLoveMessage();
     showThankYou();
     fadeOutButtons();
-  });
+  }
 
   function playMusic() {
     music.volume = 0.7;
