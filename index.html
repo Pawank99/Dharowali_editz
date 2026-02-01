@@ -82,9 +82,9 @@
     transition: opacity 2s ease, transform 2s ease;
     font-family: 'Parisienne', cursive;
     z-index: 30;
+    pointer-events: none; /* FIX */
   }
 
-  /* FIXED SPACING — moved lower */
   #thankYou {
     position: absolute;
     top: 78%;
@@ -98,6 +98,7 @@
     font-family: 'Parisienne', cursive;
     z-index: 30;
     animation: sparkle 3s infinite ease-in-out;
+    pointer-events: none; /* FIX */
   }
 
   @keyframes sparkle {
