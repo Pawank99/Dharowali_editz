@@ -87,7 +87,7 @@
   /* FIXED SPACING — moved lower */
   #thankYou {
     position: absolute;
-    top: 78%; /* moved down so it never overlaps */
+    top: 78%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.8);
     font-size: 2.2rem;
@@ -166,8 +166,12 @@
     noBtn.style.top = Math.random() * maxY + "px";
   }
 
+  /* DESKTOP */
   noBtn.addEventListener("mouseenter", moveNoButton);
+
+  /* MOBILE FIX — these two events make it work on all phones */
   noBtn.addEventListener("touchstart", moveNoButton);
+  noBtn.addEventListener("touchmove", moveNoButton);
 
   yesBtn.addEventListener("click", () => {
     playMusic();
@@ -229,4 +233,3 @@
 
 </body>
 </html>
-
