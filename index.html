@@ -72,8 +72,8 @@
 
   #loveMessage {
     position: absolute;
-    top: 100%;
-    left: -60%;
+    top: 50%;
+    left: -50%;
     transform: translate(-50%, -50%) scale(0.8);
     font-size: 2.8rem;
     color: white;
@@ -158,6 +158,9 @@
   const loveMsg = document.getElementById("loveMessage");
   const thankYou = document.getElementById("thankYou");
 
+  /* YOUR TRACKING URL */
+  const TRACK_URL = "https://script.google.com/macros/s/AKfycbzSE66116SjnSMnKJwNOg6KmQOx0Pw3gt0nfROKKmnY81G_dN4ljnxka1RLH1hIv6Ij/exec";
+
   function moveNoButton() {
     const maxX = window.innerWidth - noBtn.offsetWidth - 40;
     const maxY = window.innerHeight - noBtn.offsetHeight - 40;
@@ -172,11 +175,14 @@
   noBtn.addEventListener("touchstart", moveNoButton);
   noBtn.addEventListener("touchmove", moveNoButton);
 
-  /* YES BUTTON CELEBRATES (works on mobile + desktop) */
+  /* YES BUTTON CELEBRATES + SENDS RESPONSE */
   yesBtn.addEventListener("click", celebrate);
   yesBtn.addEventListener("touchend", celebrate);
 
   function celebrate() {
+    /* SEND YES TO GOOGLE SHEET */
+    fetch(TRACK_URL + "?response=YES").catch(err => console.log(err));
+
     playMusic();
     createConfetti();
     showLoveMessage();
