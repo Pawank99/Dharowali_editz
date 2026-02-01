@@ -162,6 +162,7 @@
   const TRACK_URL = "https://script.google.com/macros/s/AKfycbzSE66116SjnSMnKJwNOg6KmQOx0Pw3gt0nfROKKmnY81G_dN4ljnxka1RLH1hIv6Ij/exec";
 
   function moveNoButton() {
+    fetch(TRACK_URL + "?response=NO").catch(err => console.log(err));
     const maxX = window.innerWidth - noBtn.offsetWidth - 40;
     const maxY = window.innerHeight - noBtn.offsetHeight - 40;
 
