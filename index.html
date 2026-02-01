@@ -2,57 +2,136 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Be My Valentine ❤️</title>
+
+<!-- Romantic fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
   body {
     margin: 0;
     height: 100vh;
-    background: pink;
-    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffd6e8, #ff9acb, #ffb3d9);
+    background-size: 300% 300%;
+    animation: dreamyBG 12s ease infinite;
+    font-family: 'Poppins', sans-serif;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  @keyframes dreamyBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
   h1 {
-    text-align: center;
-    margin-top: 80px;
-    color: #d10068;
+    color: #b30059;
+    font-size: 2.6rem;
+    text-shadow: 0 0 12px rgba(255,255,255,0.8);
+    font-family: 'Parisienne', cursive;
+    margin-bottom: 40px;
   }
 
-  #yes, #no {
-    padding: 14px 30px;
-    font-size: 18px;
+  .btn {
+    padding: 14px 32px;
+    font-size: 1.2rem;
     border: none;
-    border-radius: 10px;
+    border-radius: 50px;
     cursor: pointer;
-    position: absolute;
+    margin: 10px;
+    transition: 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 4px 15px rgba(255, 0, 100, 0.3);
   }
 
   #yes {
-    background: #ff4d88;
+    background: linear-gradient(135deg, #ff4d88, #ff80b3);
     color: white;
-    left: 45%;
-    top: 45%;
+  }
+
+  #yes:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(255, 0, 120, 0.5);
   }
 
   #no {
     background: #444;
     color: white;
-    left: 55%;
+  }
+
+  #no:hover {
+    transform: scale(1.1);
+  }
+
+  #loveMessage {
+    position: absolute;
     top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    font-size: 2.8rem;
+    color: white;
+    text-shadow: 0 0 25px #ffb3d9;
+    opacity: 0;
+    transition: opacity 2s ease, transform 2s ease;
+    font-family: 'Parisienne', cursive;
+    z-index: 30;
+  }
+
+  /* FIXED SPACING — moved lower */
+  #thankYou {
+    position: absolute;
+    top: 78%; /* moved down so it never overlaps */
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    font-size: 2.2rem;
+    color: white;
+    text-shadow: 0 0 25px #ffb3d9;
+    opacity: 0;
+    transition: opacity 2.5s ease, transform 2.5s ease;
+    font-family: 'Parisienne', cursive;
+    z-index: 30;
+    animation: sparkle 3s infinite ease-in-out;
+  }
+
+  @keyframes sparkle {
+    0% { text-shadow: 0 0 10px #ffb3d9; }
+    50% { text-shadow: 0 0 25px #ffffff; }
+    100% { text-shadow: 0 0 10px #ffb3d9; }
   }
 
   .heart {
     position: absolute;
-    font-size: 20px;
-    animation: float 6s infinite;
-    opacity: 0.6;
+    animation: float 6s infinite ease-in-out;
+    opacity: 0.7;
+    z-index: 1;
   }
 
   @keyframes float {
-    0% { transform: translateY(100vh); opacity: 0; }
+    0% { transform: translateY(100vh) scale(0.6); opacity: 0; }
     50% { opacity: 1; }
-    100% { transform: translateY(-10vh); opacity: 0; }
+    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+  }
+
+  .confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    animation: fall 3s linear forwards;
+    z-index: 20;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(110vh) rotate(720deg);
+      opacity: 0;
+    }
   }
 </style>
 </head>
@@ -61,40 +140,89 @@
 
 <h1>Will you be my Valentine? ❤️</h1>
 
-<button id="yes" onclick="alert('Yayyy 💕 Happy Valentine’s Day!')">
-  Yes
-</button>
+<button id="yes" class="btn">Yes</button>
+<button id="no" class="btn">No</button>
 
-<button id="no">No</button>
+<div id="loveMessage">💖 You just made my whole world 💖</div>
+<div id="thankYou">💗 Thank you, Kamal 💗</div>
+
+<audio id="bgMusic" preload="auto">
+  <source src="https://cdnsongs.com/music/data/Single_Track/201605/Dasi_Na_Mere_Baare/128/Dasi_Na_Mere_Baare_1.mp3" type="audio/mpeg">
+</audio>
 
 <script>
+  const yesBtn = document.getElementById("yes");
   const noBtn = document.getElementById("no");
+  const music = document.getElementById("bgMusic");
+  const loveMsg = document.getElementById("loveMessage");
+  const thankYou = document.getElementById("thankYou");
 
   function moveNoButton() {
-    const btnWidth = noBtn.offsetWidth;
-    const btnHeight = noBtn.offsetHeight;
+    const maxX = window.innerWidth - noBtn.offsetWidth - 40;
+    const maxY = window.innerHeight - noBtn.offsetHeight - 40;
 
-    const maxX = window.innerWidth - btnWidth - 20;
-    const maxY = window.innerHeight - btnHeight - 20;
-
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
-
-    noBtn.style.left = randomX + "px";
-    noBtn.style.top = randomY + "px";
+    noBtn.style.position = "absolute";
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
   }
 
   noBtn.addEventListener("mouseenter", moveNoButton);
   noBtn.addEventListener("touchstart", moveNoButton);
 
-  // hearts
-  for (let i = 0; i < 30; i++) {
+  yesBtn.addEventListener("click", () => {
+    playMusic();
+    createConfetti();
+    showLoveMessage();
+    showThankYou();
+    fadeOutButtons();
+  });
+
+  function playMusic() {
+    music.volume = 0.7;
+    music.play().catch(() => {});
+  }
+
+  function showLoveMessage() {
+    loveMsg.style.opacity = "1";
+    loveMsg.style.transform = "translate(-50%, -50%) scale(1)";
+  }
+
+  function showThankYou() {
+    setTimeout(() => {
+      thankYou.style.opacity = "1";
+      thankYou.style.transform = "translate(-50%, -50%) scale(1)";
+    }, 1800);
+  }
+
+  function fadeOutButtons() {
+    yesBtn.style.opacity = "0";
+    noBtn.style.opacity = "0";
+    yesBtn.style.pointerEvents = "none";
+    noBtn.style.pointerEvents = "none";
+  }
+
+  function createConfetti() {
+    for (let i = 0; i < 150; i++) {
+      const conf = document.createElement("div");
+      conf.className = "confetti";
+
+      conf.style.left = Math.random() * 100 + "vw";
+      conf.style.background =
+        ["#ff4d88", "#ffd1dc", "#ffffff", "#ff99cc"]
+        [Math.floor(Math.random() * 4)];
+
+      document.body.appendChild(conf);
+      setTimeout(() => conf.remove(), 3000);
+    }
+  }
+
+  for (let i = 0; i < 40; i++) {
     const heart = document.createElement("div");
     heart.className = "heart";
-    heart.innerHTML = "❤️";
+    heart.innerHTML = "💗";
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (3 + Math.random() * 5) + "s";
-    heart.style.fontSize = (15 + Math.random() * 25) + "px";
+    heart.style.animationDuration = (4 + Math.random() * 6) + "s";
+    heart.style.fontSize = (20 + Math.random() * 30) + "px";
     document.body.appendChild(heart);
   }
 </script>
